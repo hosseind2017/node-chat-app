@@ -8,5 +8,5 @@ A Chat application with nodejs & socketIO
  
  ### Run
 
- ```nodemon server/server.js```
+ ```node server/server.js```
 
