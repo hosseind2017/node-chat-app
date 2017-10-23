@@ -1,2 +1,14 @@
 # node-chat-app
-Loading ... :D
+A Chat application with nodejs & socketIO
+
+
+ ### installing
+
+ ```npm install```
+
+ ```node server/server.js```
+ 
+ ### Run
+
+ ```nodemon server/server.js```
+
