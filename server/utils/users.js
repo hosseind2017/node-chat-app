@@ -28,7 +28,7 @@
     }
     checkUserName(name) {
       return this.users.filter(user => {
-        if (user.name === name) return true;
+        if (user.name.toLowerCase() === name.toLowerCase()) return true;
       }).length;
     }
   }
