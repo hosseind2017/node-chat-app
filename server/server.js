@@ -24,15 +24,19 @@ io.on('connection', (socket) => {
       return callback('Name and room are required.')
     }
 
-    socket.join(params.room);
-    users.removeUser(socket.id);
-    users.addUser(socket.id, params.name, params.room);
+    if (users.checkUserName(params.name)) {
+      return callback("Name already exists");
+    } else {
+      socket.join(params.room);
+      users.removeUser(socket.id);
+      users.addUser(socket.id, params.name, params.room);
 
-    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
-    socket.emit('newMessage' , generateMessage('Admin', 'Welcome to the chat app'));
-    socket.broadcast.to(params.room).emit('newMessage' , generateMessage('Admin', `${params.name} has joined`));
+      io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+      socket.emit('newMessage' , generateMessage('Admin', 'Welcome to the chat app'));
+      socket.broadcast.to(params.room).emit('newMessage' , generateMessage('Admin', `${params.name} has joined`));
 
-    callback();
+      callback();
+    }
   });
 
   socket.on('createMessage', (message, callback) => {
@@ -54,7 +58,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     var user = users.removeUser(socket.id);
-    
+
     if (user) {
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));
       io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));

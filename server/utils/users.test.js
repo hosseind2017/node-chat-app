@@ -75,4 +75,8 @@ describe('Users', () => {
 
     expect(userList).toEqual(['Jen']);
   });
+
+  it('should not proceed if username already exist', () => {
+    expect(user).toEqual(true);
+  });
 });
